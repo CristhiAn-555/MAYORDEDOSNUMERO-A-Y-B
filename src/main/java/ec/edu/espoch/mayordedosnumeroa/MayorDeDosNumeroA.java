@@ -4,8 +4,6 @@
 
 package ec.edu.espoch.mayordedosnumeroa;
 
-import java.util.Scanner;
-
 
 
 /**
@@ -14,6 +12,10 @@ import java.util.Scanner;
  */
 public class MayorDeDosNumeroA {
 
+   
+    
+    
+    // Algoritmo A: comparación directa
     public static int algoritmoA(int n1, int n2) {
         return (n1 > n2) ? n1 : n2;
     }
@@ -26,52 +28,56 @@ public class MayorDeDosNumeroA {
             a--;
             b--;
         }
-        return (a == 0) ? n2 : n1; // devuelve el mayor
+        return (a == 0) ? n2 : n1;
     }
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
 
-        // Números estáticos
         int n1 = 15;
         int n2 = 25;
-
         int resultado;
-        int veces;
 
-        // Preguntar al usuario cuántas veces quiere ejecutar
-        System.out.println("Seleccione cuántas veces ejecutar los algoritmos: ");
-        System.out.println("Opciones: 10, 20, 30, 40");
-        System.out.print("Ingrese su opción: ");
-        veces = sc.nextInt();
+        int[] repeticiones = {10, 20, 30, 40};
 
-        // Validar opción
-        if (veces != 10 && veces != 20 && veces != 30 && veces != 40) {
-            System.out.println("Opción no válida. Se usará 10 ejecuciones por defecto.");
-            veces = 10;
+        for (int veces : repeticiones) {
+
+            System.out.println("\n====================================");
+            System.out.println("EJECUCIONES: " + veces);
+            System.out.println("====================================");
+
+            // -------- ALGORITMO A --------
+            long inicioA = System.nanoTime();
+
+            for (int i = 1; i <= veces; i++) {
+                resultado = algoritmoA(n1, n2);
+                System.out.println("Alg A - Ejecución " + i + ": Mayor = " + resultado);
+            }
+
+            long finA = System.nanoTime();
+            long tiempoTotalA_ns = finA - inicioA;
+
+            double tiempoTotalA_s = tiempoTotalA_ns / 1_000_000_000.0;
+            double promedioA_s = tiempoTotalA_s / veces;
+
+            System.out.println("Tiempo total Algoritmo A: " + tiempoTotalA_s + " s");
+            System.out.println("Promedio Algoritmo A: " + promedioA_s + " s");
+
+            // -------- ALGORITMO B --------
+            long inicioB = System.nanoTime();
+
+            for (int i = 1; i <= veces; i++) {
+                resultado = algoritmoB(n1, n2);
+                System.out.println("Alg B - Ejecución " + i + ": Mayor = " + resultado);
+            }
+
+            long finB = System.nanoTime();
+            long tiempoTotalB_ns = finB - inicioB;
+
+            double tiempoTotalB_s = tiempoTotalB_ns / 1_000_000_000.0;
+            double promedioB_s = tiempoTotalB_s / veces;
+
+            System.out.println("Tiempo total Algoritmo B: " + tiempoTotalB_s + " s");
+            System.out.println("Promedio Algoritmo B: " + promedioB_s + " s");
         }
-
-        // --- Algoritmo A ---
-        long inicioA = System.nanoTime();
-        System.out.println("\n--- Algoritmo A (" + veces + " veces) ---");
-        for (int i = 1; i <= veces; i++) {
-            resultado = algoritmoA(n1, n2);
-            System.out.println("Ejecución " + i + ": Mayor = " + resultado);
-        }
-        long finA = System.nanoTime();
-        System.out.println("Tiempo total Algoritmo A: " + (finA - inicioA) + " ns");
-
-        // --- Algoritmo B ---
-        long inicioB = System.nanoTime();
-        System.out.println("\n--- Algoritmo B (" + veces + " veces) ---");
-        for (int i = 1; i <= veces; i++) {
-            resultado = algoritmoB(n1, n2);
-            System.out.println("Ejecución " + i + ": Mayor = " + resultado);
-        }
-        long finB = System.nanoTime();
-        System.out.println("Tiempo total Algoritmo B: " + (finB - inicioB) + " ns");
-
-        sc.close();
     }
-      
 }
